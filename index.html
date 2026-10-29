@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — CtrlVouch Chrome Extension (BooBilli)</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      line-height: 1.65;
+      margin: 0;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 36px 42px;
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+    }
+    h1 {
+      color: #1d4ed8;
+      font-size: 26px;
+      margin-top: 0;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 14px;
+    }
+    h2 {
+      color: #0f172a;
+      font-size: 18px;
+      margin-top: 28px;
+    }
+    .meta {
+      background: #f1f5f9;
+      border-left: 4px solid #2563eb;
+      padding: 12px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    code {
+      background: #f1f5f9;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+    ul {
+      padding-left: 22px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    footer {
+      margin-top: 36px;
+      padding-top: 18px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 13px;
+      color: #64748b;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Privacy Policy for CtrlVouch</h1>
+    <div class="meta">
+      <strong>Effective Date:</strong> October 28, 2026<br />
+      <strong>Extension Name:</strong> CtrlVouch — SOC 1, SOC 2 &amp; SOX Control Vouching &amp; Screenshot Collector<br />
+      <strong>Developer &amp; Publisher:</strong> BooBilli
+    </div>
+
+    <h2>1. Overview &amp; Zero-Server Architecture</h2>
+    <p>
+      <strong>CtrlVouch</strong>, developed and published by <strong>BooBilli</strong> ("BooBilli", "we", "us", or "our"), is a client-side browser extension designed for compliance auditors, security engineers, and GRC professionals to capture, watermark, and bundle screenshots mapped to SOC 1, SOC 2, and SOX audit controls.
+    </p>
+    <p>
+      <strong>CtrlVouch operates 100% locally inside your web browser.</strong> BooBilli does <strong>not</strong> operate any backend servers, analytics trackers, or telemetry endpoints for CtrlVouch. We never collect, transmit, view, store, or sell your screenshots, browsing activity, audit notes, or cloud storage credentials.
+    </p>
+
+    <h2>2. Data Stored Locally on Your Device</h2>
+    <p>All data generated or configured within CtrlVouch is stored exclusively on your local device using standard browser storage APIs:</p>
+    <ul>
+      <li>
+        <strong>Extension Settings &amp; Custom Controls (<code>chrome.storage.local</code>):</strong>
+        Your selected theme (Light/Dark), custom screenshot hotkey, auditor name/organization stamp text, and any custom audit controls you add. If you choose to configure direct cloud exports, your AWS S3 or Azure Blob Storage configuration parameters are saved strictly in your local browser profile (<code>chrome.storage.local</code>).
+      </li>
+      <li>
+        <strong>Captured Audit Evidence Screenshots (<code>IndexedDB</code>):</strong>
+        Captured PNG screenshots, SHA-256 integrity hashes, timestamps, and source URLs are stored locally in your browser's <code>IndexedDB</code> (<code>CtrlVouchComplianceDB</code>) until you export or delete them.
+      </li>
+    </ul>
+
+    <h2>3. Data Transmission &amp; User-Configured Storage Destinations</h2>
+    <p>CtrlVouch only transmits data when <strong>explicitly triggered by you</strong>:</p>
+    <ul>
+      <li><strong>Local Drive / ZIP Export:</strong> Saves the bundled <code>.zip</code> archive directly to your local filesystem using Chrome's Downloads API (<code>chrome.downloads</code>) or the HTML5 File System Access API (<code>window.showDirectoryPicker</code>).</li>
+      <li><strong>AWS S3 Integration (Optional):</strong> If you configure an Amazon S3 bucket and trigger an S3 upload, your browser communicates <strong>directly</strong> with Amazon Web Services (<code>https://&lt;bucket&gt;.s3.&lt;region&gt;.amazonaws.com</code> or your custom S3-compatible endpoint) using client-side AWS Signature Version 4 (<code>AWS4-HMAC-SHA256</code>).</li>
+      <li><strong>Azure Blob Storage Integration (Optional):</strong> If you configure an Azure Blob container and trigger an Azure upload, your browser communicates <strong>directly</strong> with Microsoft Azure (<code>https://&lt;account&gt;.blob.core.windows.net</code>) using your SAS Token or SharedKey signature.</li>
+    </ul>
+    <p>No data ever passes through any server owned or operated by <strong>BooBilli</strong>.</p>
+
+    <h2>4. Permissions Disclosure</h2>
+    <p>CtrlVouch requests only the minimum Chrome permissions necessary to perform its single compliance function:</p>
+    <ul>
+      <li><strong><code>activeTab</code> &amp; <code>tabs</code>:</strong> Used only when you press your capture hotkey or click "Capture Control Screenshot Now" to take a PNG snapshot of the visible tab (<code>chrome.tabs.captureVisibleTab</code>) and record the active tab's URL and page title on the audit evidence header.</li>
+      <li><strong><code>storage</code> &amp; <code>unlimitedStorage</code>:</strong> Used to store your extension preferences and local screenshot vault in <code>IndexedDB</code> so high-resolution audit screenshots are not lost before bundling into a <code>.zip</code> file.</li>
+      <li><strong><code>downloads</code>:</strong> Used to save the bundled <code>.zip</code> archive to your local drive.</li>
+      <li><strong><code>host_permissions</code> (<code>&lt;all_urls&gt;</code>):</strong> Used to listen for your custom screenshot hotkey on the web applications you are auditing and to allow direct HTTPS <code>PUT</code> requests to your own AWS S3 or Azure Blob Storage endpoints.</li>
+    </ul>
+
+    <h2>5. Data Retention &amp; Deletion</h2>
+    <ul>
+      <li>You can delete individual screenshots or click <strong>"Clear All"</strong> in the CtrlVouch Evidence Vault at any time to permanently erase all stored screenshots from <code>IndexedDB</code>.</li>
+      <li>Uninstalling the CtrlVouch extension from Google Chrome automatically and permanently deletes all local <code>IndexedDB</code> databases and <code>chrome.storage.local</code> settings associated with the extension.</li>
+    </ul>
+
+    <h2>6. Changes to This Privacy Policy</h2>
+    <p>If BooBilli updates this Privacy Policy, we will post the revised version on this page with an updated Effective Date.</p>
+
+    <h2>7. Contact Information</h2>
+    <p>For questions regarding this Privacy Policy or CtrlVouch, please contact <strong>BooBilli</strong> via the support section on the Chrome Web Store listing.</p>
+
+    <footer>
+      &copy; 2026 <strong>BooBilli</strong>. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
